@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+{% block title_page %}
+    modificatio du produit {{ product.name }}
+{% endblock title_page %}
+
+
+{% block content %}
+<div class="card">
+    <div class="card-body">
+        <a href="{% url 'index' %}" class="btn btn-default">back</a>
+        <h5 class="card-title">Modifier un Livre: {{ product.name }}</h5>
+        <form action="{% url 'update' product.id %}" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type='submit' class="btn btn-success">update</button>
+            <a type="button" href="{% url 'index' %}" class="btn btn-default">cancel</a>
+        </form>
+    </div>
+</div>
+{% endblock content %}
+    

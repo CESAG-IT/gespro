@@ -1,0 +1,66 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+{% block title_page %}
+    Accueil
+{% endblock title_page %}
+    
+
+
+{% block content %}
+<div class="card">
+    <div class="card-body">
+      {% if request.user.is_superuser %}
+        <a href="{% url 'create' %}" class="btn btn-primary">Add product</a>
+      {% endif %}
+        <h5 class="card-title">Liste des Livres</h5>
+        <table class="table">
+            <thead>
+              <tr>
+                <th scope="col">#</th>
+                <th scope="col">image</th>
+                <th scope="col">Nom</th>
+                <th scope="col">Description</th>
+                <th scope="col">Prix</th>
+                <th scope="col">Qté</th>
+                <th scope="col">Status</th>
+                <th scope="col">Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              
+              
+              {% for product  in products %}
+              <tr>
+                <td scope="row">{{product.id}}</td>
+                <td><img src="{{ product.image.url }}" class="img-thumbnail" style="max-width: 100px;" alt="{{ product.name }}"> </td>
+                <td>{{ product.name }}</td>
+                <td>{{ product.description }}</td>
+                <td>{{ product.price }}</td>
+                <td>{{ product.qty }}</td>
+                <td>{{ product.status }}</td>
+                <td>
+
+                  {% if request.user.is_superuser %}
+                  <a href="{% url 'update' product.id %}">
+                    <button type="button" class="btn btn-warning">edit</button>
+                  </a>
+                                            
+                    
+                    <a href="{% url 'delete' product.id %}"> 
+                      <button type="button" class="btn btn-danger">delete</button>
+                    </a>
+                  {% endif %}
+                </td>
+              </tr>
+              {% endfor %}
+                
+            </tbody>
+        </table>
+
+      
+    </div>
+  </div>
+{% endblock content %}
+    
